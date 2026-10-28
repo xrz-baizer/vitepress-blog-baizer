@@ -52,10 +52,10 @@ function initialize(s,entries,cash,price,settings){
 }
 function createPosition({name,price,basePrice,baseQty,mobileAmount},settings){
  if(!finite(price,.000001,1e7))throw Error('请填写大于0的现价。');
- const initial=lot({price:basePrice,qty:baseQty,tag:'base',source:'opening',feeMode:'auto',date:today()},settings,inferKind(name));
+ const initial=lot({price:basePrice,qty:baseQty,tag:'base',source:'opening',feeMode:'included',date:today()},settings,inferKind(name));
  mobileAmount=mobileAmount??initial.cost;if(!finite(mobileAmount,0,1e9))throw Error('机动资金必须是有效的非负金额。');mobileAmount=round(mobileAmount);
  const s=makeStock({name,base:initial.cost,mobile:mobileAmount,reserve:0});
- initialize(s,[{price:basePrice,qty:baseQty,tag:'base',feeMode:'auto',date:today()}],{base:0,mobile:mobileAmount,reserve:0},price,settings);return s;
+ initialize(s,[{price:basePrice,qty:baseQty,tag:'base',feeMode:'included',date:today()}],{base:0,mobile:mobileAmount,reserve:0},price,settings);return s;
 }
 
 function settle(s,id,price,settings,qty){
@@ -68,8 +68,8 @@ function settle(s,id,price,settings,qty){
 }
 function removeLot(s,id){const l=s.lots.find(x=>x.id===id);if(!l)throw Error('记录已不存在。');if(l.source==='opening')s.capital=round(s.capital-l.cost);else s.cash[groupOf(l.tag)]=round(s.cash[groupOf(l.tag)]+l.cost);s.lots=s.lots.filter(x=>x.id!==id);}
 function correctLot(s,id,args,settings){
- const old=s.lots.find(l=>l.id===id);if(!old)throw Error('记录已不存在。');const next=lot({...args,id,source:old.source,feeMode:old.feeMode||(old.source==='opening'?'included':'auto')},settings,s.kind);
- if(old.price===next.price&&old.qty===next.qty){next.fee=old.fee;next.cost=old.cost;}
+ const old=s.lots.find(l=>l.id===id);if(!old)throw Error('记录已不存在。');const next=lot({...args,id,source:old.source,feeMode:old.source==='opening'?(args.feeMode||old.feeMode||'included'):'auto'},settings,s.kind);
+ if(old.price===next.price&&old.qty===next.qty&&old.feeMode===next.feeMode){next.fee=old.fee;next.cost=old.cost;}
  if(old.source==='opening'){s.capital=round(s.capital+next.cost-old.cost);s.lots=s.lots.map(l=>l.id===id?next:l);return next;}
  const a=groupOf(old.tag),b=groupOf(next.tag),cash={...s.cash};cash[a]=round(cash[a]+old.cost);cash[b]=round(cash[b]-next.cost);
  if(cash[b]<0)throw Error('更正后的成本超过可用资金，请先调整资金配置。');s.cash=cash;s.lots=s.lots.map(l=>l.id===id?next:l);return next;
