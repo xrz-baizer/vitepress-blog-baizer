@@ -1,6 +1,13 @@
 'use strict';
 const I18n=(()=>{
  const messages={
+  "预设机动仓手数":"Target lots (100 shares)",
+  "请输入整数手数，每手100股。":"Enter a whole number of lots. One lot is 100 shares.",
+  "上移":"Move up", "下移":"Move down", "盈亏":"P&L", "盈亏率":"P&L %",
+  "预设机动仓股数":"Target trading shares",
+  "机动仓预设 {target} 股 · {status} {remaining} 股":"Target {target} shares · {status} {remaining}",
+  "剩余":"Available", "超出":"Over", "机动仓预设：未设置":"Trading target: not set",
+  "请输入有效的机动仓预设股数。":"Enter a whole-number trading share target from 0 to 1,000,000,000.",
   "我的持仓": "My holdings",
   "持仓汇总": "Portfolio summary",
   "全部股票与机动仓": "Stocks and trading lots",

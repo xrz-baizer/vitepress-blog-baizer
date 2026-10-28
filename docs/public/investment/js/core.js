@@ -11,19 +11,20 @@ const finite=(n,min=-1e12,max=1e12)=>typeof n==='number'&&Number.isFinite(n)&&n>
 const groupOf=tag=>tag==='base'?'base':'mobile';
 function fee(amount,side,kind,s){return round(round(Math.max(kind==='etf'?s.etfMinimum:s.minimum,amount*(kind==='etf'?s.etfCommission:s.commission)))+(kind==='etf'?0:round(amount*s.transfer))+(kind==='etf'||side==='buy'?0:round(amount*s.stamp)));}
 const inferKind=name=>/ETF|LOF|基金|标普\s*500|纳指/i.test(name)?'etf':'stock';
-function handsToShares(hands){
- const qty=Math.round(hands*100);if(!finite(hands,.01,1e7)||!Number.isSafeInteger(qty)||Math.abs(hands*100-qty)>.000001)throw Error('请输入有效手数，最多保留两位小数。');return qty;
+function handsToShares(hands,{allowZero=false}={}){
+ if(!finite(hands,allowZero?0:1,1e7)||!Number.isSafeInteger(hands))throw Error('请输入整数手数，每手100股。');return hands*100;
 }
 function holdingTotals(stocks){
  let profit=0,loss=0;for(const s of stocks){if(s.price===null&&s.lots.length)return{profit:null,loss:null};for(const l of s.lots){const p=round(s.price*l.qty-l.cost);if(p>0)profit+=p;else loss+=p;}}return{profit:round(profit),loss:round(loss)};
 }
 
-function makeStock({name,code='',kind,base,mobile,reserve}){
+function makeStock({name,code='',kind,base,mobile,reserve,mobileTargetQty=0}){
  kind=kind||inferKind(name);
  if(typeof name!=='string'||!name.trim()||!(code===''||typeof code==='string'&&/^\d{6}$/.test(code))||!['stock','etf'].includes(kind))throw Error('请填写有效的股票名称。');
  if(![base,mobile,reserve].every(n=>finite(n,0,1e9))||base+mobile+reserve<=0)throw Error('请填写有效的资金配置。');
+ if(!Number.isSafeInteger(mobileTargetQty)||mobileTargetQty<0||mobileTargetQty>1e9)throw Error('请输入有效的机动仓预设股数。');
  const budget={base:round(base),mobile:round(mobile),reserve:round(reserve)};
- return {id:uid(),name:name.trim().slice(0,40),code,kind,budget,cash:{...budget},capital:round(base+mobile+reserve),price:null,priceDate:null,quotes:[],realized:0,lots:[]};
+ return {id:uid(),name:name.trim().slice(0,40),code,kind,mobileTargetQty,budget,cash:{...budget},capital:round(base+mobile+reserve),price:null,priceDate:null,quotes:[],realized:0,lots:[]};
 }
 function lot({price,qty,tag='mobile',date=today(),source='buy',feeMode=source==='opening'?'included':'auto',id=uid()},settings,kind){
  if(!finite(price,.000001,1e7)||!Number.isSafeInteger(qty)||qty<=0||qty>1e9||price*qty>1e12)throw Error('请输入有效的成本价格和整数股数。');
@@ -50,11 +51,11 @@ function initialize(s,entries,cash,price,settings){
  for(const k of ['base','mobile','reserve'])if(!finite(cash[k],0,1e9))throw Error('请填写实际剩余现金，满仓时可填0。');
  s.lots=lots;s.cash={base:round(cash.base),mobile:round(cash.mobile),reserve:round(cash.reserve)};s.capital=round(lots.reduce((n,l)=>n+l.cost,0)+s.cash.base+s.cash.mobile+s.cash.reserve);if(price!==null)quote(s,price);return s;
 }
-function createPosition({name,price,basePrice,baseQty,mobileAmount},settings){
+function createPosition({name,price,basePrice,baseQty,mobileAmount,mobileTargetQty=0},settings){
  if(!finite(price,.000001,1e7))throw Error('请填写大于0的现价。');
  const initial=lot({price:basePrice,qty:baseQty,tag:'base',source:'opening',feeMode:'included',date:today()},settings,inferKind(name));
  mobileAmount=mobileAmount??initial.cost;if(!finite(mobileAmount,0,1e9))throw Error('机动资金必须是有效的非负金额。');mobileAmount=round(mobileAmount);
- const s=makeStock({name,base:initial.cost,mobile:mobileAmount,reserve:0});
+ const s=makeStock({name,base:initial.cost,mobile:mobileAmount,reserve:0,mobileTargetQty});
  initialize(s,[{price:basePrice,qty:baseQty,tag:'base',feeMode:'included',date:today()}],{base:0,mobile:mobileAmount,reserve:0},price,settings);return s;
 }
 
@@ -102,7 +103,7 @@ function validate(input){
  const settings={};for(const k of Object.keys(defaults())){if(!finite(r.settings?.[k],0,k.toLowerCase().includes('minimum')?10000:.1))throw Error('备份费率无效。');settings[k]=r.settings[k];}
  const ids=new Set(),getId=id=>{if(typeof id!=='string'||!/^[a-zA-Z0-9-]{1,100}$/.test(id)||ids.has(id))throw Error('记录编号无效或重复。');ids.add(id);return id;};
  const stocks=r.stocks.map(s=>{
-  const t=makeStock({name:s.name,code:s.code,kind:s.kind,...s.budget});t.id=getId(s.id);
+  const t=makeStock({name:s.name,code:s.code,kind:s.kind,...s.budget,mobileTargetQty:s.mobileTargetQty??0});t.id=getId(s.id);
   for(const k of ['base','mobile','reserve']){if(!finite(s.cash?.[k],0))throw Error('现金数据无效。');t.cash[k]=s.cash[k];}
   if(!finite(s.capital)||!finite(s.realized))throw Error('资金数据无效。');t.capital=s.capital;t.realized=s.realized;
   if(!Array.isArray(s.lots)||s.lots.length>20000||!Array.isArray(s.quotes)||s.quotes.length>30000)throw Error('记录数量无效。');

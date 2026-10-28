@@ -180,3 +180,37 @@ html[lang=en] .field:has(input[name=hands])>span{font-size:.875rem}html[lang=en]
 
 .mobile-panel table,.table-header-grid,html[lang=en] .mobile-panel table,html[lang=en] .table-header-grid{min-width:30rem}.table-header-grid,html[lang=en] .table-header-grid{grid-template-columns:11% 11% 13% 25% 13% 17% 10%}.table-header-grid>span{padding-left:.25rem;padding-right:.25rem}.mobile-panel td{padding-left:.25rem;padding-right:.25rem}.mobile-panel td.purchase-date{font-size:.75rem}.mobile-panel .row-actions button{padding-left:.3125rem;padding-right:.3125rem}.mobile-panel .numeric-line{display:inline-block;white-space:nowrap;font-size:calc(.9375rem * var(--pnl-scale,1));max-width:none;vertical-align:middle}.mobile-panel .numeric-cell{overflow:hidden}html[lang=en] .table-header-grid>span:nth-child(3){font-size:.6875rem}
 @media(max-width:760px){.mobile-panel table,html[lang=en] .mobile-panel table{min-width:0}}
+
+/* Split P&L columns share the same geometry with the fixed header. */
+.mobile-panel table,.table-header-grid,html[lang=en] .mobile-panel table,html[lang=en] .table-header-grid{min-width:34rem}
+.table-header-grid,html[lang=en] .table-header-grid{grid-template-columns:10% 11% 12% 15% 12% 14% 16% 10%}
+.table-header-grid>span,html[lang=en] .table-header-grid>span{font-size:.75rem;font-weight:750}
+.stock-order{display:flex;gap:.375rem;margin-top:.375rem}.stock-order button{flex:1;min-width:0;font-size:.8125rem;padding:.375rem .25rem;min-height:2rem}.stock-order button:disabled{opacity:.32;cursor:default}
+.mobile-capacity{font-size:.75rem;font-weight:550;line-height:1.5;margin-top:.4375rem;color:#64748b;overflow-wrap:anywhere}
+[data-theme=dark] .mobile-capacity{color:#9fadc0}
+[data-theme=dark] .settle-preview{background:linear-gradient(145deg,#719ac51a,#7396c208);border:1px solid #b2ccec20;color:#bec8d5;box-shadow:inset 0 1px 0 #ffffff08}
+@media(max-width:760px){.mobile-panel table,html[lang=en] .mobile-panel table{min-width:0}}
+
+/* Keep the capacity footer visible without growing the three-card layout. */
+.base-panel .position-metrics{gap:.1875rem}.base-panel .stock-name-line{margin-bottom:.25rem}.base-panel .mobile-capacity{margin-top:.1875rem;flex-shrink:0}.base-panel .mobile-totals{margin-top:.25rem;padding-top:.25rem}
+.operation-panel .stock-order{order:4}.operation-panel .inline-quote{order:1}.operation-panel .secondary-actions{order:2}
+.mobile-panel table,.table-header-grid,html[lang=en] .mobile-panel table,html[lang=en] .table-header-grid{min-width:30rem}
+@media(max-width:760px){.mobile-panel table,html[lang=en] .mobile-panel table{min-width:0}.base-panel .mobile-capacity{grid-column:1/-1}.operation-panel .stock-order{grid-column:1/-1;grid-row:4}.mobile-panel .pnl-cell{grid-column:auto}}
+[data-theme=dark] .settle-preview span:last-child{color:#9fadc0}
+@media(min-width:761px){.base-panel .position-metrics{gap:.0625rem}.stock-name-line h2{margin:0;line-height:1.3}.stock-name-line .stock-current-price{font-size:1.25rem;line-height:1.1;padding:.125rem .5rem}.base-panel .stock-name-line{min-height:1.75rem;flex-shrink:0}}
+.table-header-grid>span,html[lang=en] .table-header-grid>span{white-space:normal;line-height:1.2;min-width:0;overflow-wrap:normal;display:flex;align-items:center;min-height:2rem}
+
+/* Let stock-order controls wrap as whole buttons when the font is enlarged. */
+.operation-panel .stock-order{flex-wrap:wrap;min-width:0;flex-shrink:0}
+.operation-panel .stock-order button{flex:1 1 5.75em;min-width:max-content;white-space:nowrap;padding:.375rem .5rem;line-height:1.25;letter-spacing:normal}
+/* Give price entry its own full-width row and separate each stock action. */
+.operation-panel{gap:.5rem;padding:.625rem .75rem}
+.operation-panel>*,.operation-panel .quote-controls>*{flex-shrink:0}
+.operation-panel .inline-quote{width:100%;margin:0}
+.operation-panel .quote-controls{display:flex;flex-direction:column;align-items:stretch;gap:.5rem}
+.operation-panel .inline-quote input{width:100%;max-width:none;min-width:0;font-size:1rem;height:2.125rem;padding:.375rem .625rem;font-variant-numeric:tabular-nums}
+.operation-panel .inline-quote .update-button{width:100%;font-size:.75rem;min-height:1.875rem;padding:.3125rem .5rem;line-height:1.25}
+.operation-panel .secondary-actions{margin:0}
+.operation-panel .stock-order{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem;margin:.125rem 0 0;container-type:inline-size}
+.operation-panel .stock-order button{width:100%;min-width:0;white-space:nowrap;min-height:1.875rem;font-size:.75rem;font-size:min(.75rem,6cqw);padding:.3125rem .125rem;line-height:1.25;letter-spacing:normal}
+@media(max-width:760px){.operation-panel .inline-quote{display:block}.operation-panel .quote-controls{width:100%}}
