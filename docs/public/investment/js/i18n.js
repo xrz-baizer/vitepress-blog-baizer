@@ -1,6 +1,8 @@
 'use strict';
 const I18n=(()=>{
  const messages={
+ "持仓成本价变化":"Position cost change", "已清仓，不再计算持仓成本价":"Position closed; no remaining cost per share", "持仓成本价不变":"Cost per share unchanged", "每股降低 {amount} 元":"Down CNY {amount} per share", "每股升高 {amount} 元":"Up CNY {amount} per share",
+ "总股数":"Total shares", "平均买入价":"Avg. buy price", "平均持有天数":"Avg. days held", "总盈亏":"Total P&L", "总盈亏率":"Total P&L %", "总市值":"Total value", "合计":"Total", "全部卖出":"Sell all", "全部卖出机动仓":"Sell all trading lots", "确认全部卖出":"Confirm sale", "总盈亏包含已结算盈亏，成本已抵扣已实现净收益":"Includes realized net P&L; realized gains reduce the remaining cost basis.",
   "预设机动仓手数":"Target lots (100 shares)",
   "请输入整数手数，每手100股。":"Enter a whole number of lots. One lot is 100 shares.",
   "上移":"Move up", "下移":"Move down", "盈亏":"P&L", "盈亏率":"P&L %",
@@ -11,7 +13,7 @@ const I18n=(()=>{
   "我的持仓": "My holdings",
   "持仓汇总": "Portfolio summary",
   "全部股票与机动仓": "Stocks and trading lots",
-  "总持仓盈亏": "Unrealized P&L",
+  "总持仓盈亏": "Total P&L",
   "总持仓市值": "Total market value",
   "总持仓市值（万）": "Total value (10k CNY)",
   "市值（万）": "Value (10k CNY)",
@@ -22,7 +24,7 @@ const I18n=(()=>{
   "万": "×10k",
   "市值": "Market value",
   "总持仓 / 底仓": "Total / Core",
-  "总成本价": "Avg. cost",
+  "持仓成本价": "Avg. cost",
   "总浮动盈亏": "Unrealized P&L",
   "总浮动盈亏＝底仓浮动盈亏＋全部机动仓浮动盈亏": "Total unrealized P&L = core holdings + all trading lots",
   "机动仓总市值": "Trading value",

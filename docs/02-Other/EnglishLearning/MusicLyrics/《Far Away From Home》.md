@@ -146,57 +146,87 @@ Without you I will be so far away from home
 ### [Verse 1]
 
 I'm loving living every single day (我热爱生活的每一天)
+
 But sometimes I feel so (但有时我感到如此)
+
 I hope to find a little peace of mind (我希望能找到一丝内心的平静)
+
 And I just want to know (而我只想知道)
 
 And who can heal those tiny broken hearts (谁能治愈那些微小破碎的心)
+
 And what are we to be (我们将何去何从)
+
 Where is home on the Milky Way of stars (家在繁星点点的银河何方)
+
 I dry my eyes again (我再次擦干眼泪)
 
 In my dreams I am not so far away from home (在梦里，我离家并不遥远)
+
 What am I in a world so far away from home (在这个远离家乡的世界里，我是什么)
+
 All my life, all the time, so far away from home (我的一生，所有的时间，都远离家乡)
+
 Without you I will be so far away from home (没有你，我将远离家乡)
 
 ### [Verse 2]
 
 If we could make it through the darkest night (如果我们能度过最黑暗的夜晚)
+
 We'd have a brighter day (我们将会迎来更光明的日子)
+
 The world I see beyond your pretty eyes (透过你美丽的双眼我看到的世界)
+
 Makes me want to stay (让我想留下来)
 
 And who can heal those tiny broken hearts (谁能治愈那些微小破碎的心)
+
 And what are we to be (我们将何去何从)
+
 Where is home on the Milky Way of stars (家在繁星点点的银河何方)
+
 I dry my eyes again (我再次擦干眼泪)
 
 In my dreams I am not so far away from home (在梦里，我离家并不遥远)
+
 What am I in a world so far away from home (在这个远离家乡的世界里，我是什么)
+
 All my life, all the time, so far away from home (我的一生，所有的时间，都远离家乡)
+
 Without you I will be so far away from home (没有你，我将远离家乡)
 
 ### [Verse 3]
 
 I count on you, no matter what they say (我依赖你，无论他们说什么)
+
 Cause love can find its time (因为爱会找到属于它的时机)
+
 I hope to be a part of you again (我希望能再次成为你的一部分)
+
 Baby, let us shine (宝贝，让我们闪耀)
 
 And who can heal those tiny broken hearts (谁能治愈那些微小破碎的心)
+
 And what are we to be (我们将何去何从)
+
 Where is home on the Milky Way of stars (家在繁星点点的银河何方)
+
 I dry my eyes again (我再次擦干眼泪)
 
 In my dreams I am not so far away from home (在梦里，我离家并不遥远)
+
 What am I in a world so far away from home (在这个远离家乡的世界里，我是什么)
+
 All my life, all the time, so far away from home (我的一生，所有的时间，都远离家乡)
+
 Without you I will be so far away from home (没有你，我将远离家乡)
 
 In my dreams I am not so far away from home (在梦里，我离家并不遥远)
+
 What am I in a world so far away from home (在这个远离家乡的世界里，我是什么)
+
 All my life, all the time, so far away from home (我的一生，所有的时间，都远离家乡)
+
 Without you I will be so far away from home (没有你，我将远离家乡)
 
 ## 跟唱版

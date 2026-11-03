@@ -6,7 +6,7 @@ const uid=()=>globalThis.crypto?.randomUUID?.()||`id-${Date.now()}-${Math.random
 const validDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s).toISOString().slice(0,10)===s;
 const days=(date,until=today())=>date===null?null:Math.max(0,Math.floor((Date.parse(until)-Date.parse(date))/86400000));
 const defaults=()=>({commission:.00009,minimum:0,stamp:.0005,transfer:.00001,etfCommission:.00005000001,etfMinimum:0});
-const empty=()=>({version:2,settings:defaults(),view:{fontPercent:100,theme:'light',language:'en'},stocks:[],lastBackup:null});
+const empty=()=>({version:2,settings:defaults(),view:{fontPercent:120,theme:'light',language:'en'},stocks:[],lastBackup:null});
 const finite=(n,min=-1e12,max=1e12)=>typeof n==='number'&&Number.isFinite(n)&&n>=min&&n<=max;
 const groupOf=tag=>tag==='base'?'base':'mobile';
 function fee(amount,side,kind,s){return round(round(Math.max(kind==='etf'?s.etfMinimum:s.minimum,amount*(kind==='etf'?s.etfCommission:s.commission)))+(kind==='etf'?0:round(amount*s.transfer))+(kind==='etf'||side==='buy'?0:round(amount*s.stamp)));}
@@ -86,10 +86,25 @@ function sortedMobileLots(s){
   return b.lot.date.localeCompare(a.lot.date);
  }).map(({lot})=>lot);
 }
+function mobileSummary(s){
+ const lots=s.lots.filter(l=>l.tag==='mobile'),qty=lots.reduce((n,l)=>n+l.qty,0),cost=round(lots.reduce((n,l)=>n+l.cost,0)),value=qty===0?0:s.price===null?null:round(s.price*qty),pnl=value===null?null:round(value-cost);
+ return {qty,cost,value,pnl,avgPrice:qty?lots.reduce((n,l)=>n+l.price*l.qty,0)/qty:null,avgDays:qty&&lots.every(l=>l.date!==null)?lots.reduce((n,l)=>n+days(l.date)*l.qty,0)/qty:null,pct:cost&&pnl!==null?pnl/cost*100:null};
+}
+function settleMobileAll(s,price,settings){
+ if(!finite(price,.000001,1e7))throw Error('请输入有效卖出价格。');
+ const st=mobileSummary(s);if(!st.qty)throw Error('暂无机动仓');
+ const gross=round(price*st.qty),fees=fee(gross,'sell',s.kind,settings),net=round(gross-fees),pnl=round(net-st.cost);
+ if(s.cash.mobile+net<0)throw Error('卖出费用大于可用金额，请检查费率。');
+ s.cash.mobile=round(s.cash.mobile+net);s.realized=round(s.realized+pnl);s.lots=s.lots.filter(l=>l.tag!=='mobile');return {net,pnl,fees};
+}
 function stats(s){
  const cost=round(s.lots.reduce((n,l)=>n+l.cost,0)),qty=s.lots.reduce((n,l)=>n+l.qty,0),value=qty===0?0:s.price===null?null:round(s.price*qty),cash=round(s.cash.base+s.cash.mobile+s.cash.reserve);
  const base=s.lots.filter(l=>l.tag==='base'),baseCost=round(base.reduce((n,l)=>n+l.cost,0)),baseQty=base.reduce((n,l)=>n+l.qty,0),mobileCost=round(s.lots.filter(l=>l.tag==='mobile').reduce((n,l)=>n+l.cost,0));
  return {cost,qty,value,cash,float:value===null?null:round(value-cost),total:value===null?null:round(value-cost+s.realized),equity:value===null?null:round(value+cash),baseCost,baseQty,adjusted:baseQty?(baseCost-s.realized)/baseQty:null,mobileCost};
+}
+function settlementImpact(before,after){
+ const a=stats(before),b=stats(after),beforePrice=a.qty?(a.cost-before.realized)/a.qty:null,afterPrice=b.qty?(b.cost-after.realized)/b.qty:null;
+ return {beforePrice,afterPrice,reduction:beforePrice===null||afterPrice===null?null:beforePrice-afterPrice};
 }
 function migrate(raw){
  if(raw?.version!==1)return raw;const r=structuredClone(raw);r.version=2;r.settings={...r.settings,commission:.00009,minimum:0,etfCommission:.00005000001,etfMinimum:0};
@@ -97,7 +112,7 @@ function migrate(raw){
 }
 function validate(input){
  const r=migrate(input);if(!r||r.version!==2||!Array.isArray(r.stocks)||r.stocks.length>300)throw Error('不是受支持的持仓备份。');
- const fontPercent=r.view?.fontPercent??100;if(!Number.isInteger(fontPercent)||fontPercent<80||fontPercent>160)throw Error('字号百分比应为80至160。');
+ const fontPercent=r.view?.fontPercent??120;if(!Number.isInteger(fontPercent)||fontPercent<80||fontPercent>160)throw Error('字号百分比应为80至160。');
  const theme=r.view?.theme??'light';if(!['light','dark'].includes(theme))throw Error('主题设置无效。');
  const language=r.view?.language??'en';if(!['zh','en'].includes(language))throw Error('语言设置无效。');
  const settings={};for(const k of Object.keys(defaults())){if(!finite(r.settings?.[k],0,k.toLowerCase().includes('minimum')?10000:.1))throw Error('备份费率无效。');settings[k]=r.settings[k];}
@@ -113,5 +128,5 @@ function validate(input){
  });
  if(new Set(stocks.filter(s=>s.code).map(s=>s.code)).size!==stocks.filter(s=>s.code).length)throw Error('股票代码重复。');return {version:2,settings,view:{fontPercent,theme,language},stocks,lastBackup:typeof r.lastBackup==='string'?r.lastBackup:null};
 }
-root.LedgerCore={round,today,uid,validDate,days,defaults,empty,fee,makeStock,addLot,initialize,settle,removeLot,correctLot,configure,quote,stats,migrate,validate,groupOf,inferKind,createPosition,handsToShares,holdingTotals,sortedMobileLots};if(typeof module!=='undefined')module.exports=root.LedgerCore;
+root.LedgerCore={round,today,uid,validDate,days,defaults,empty,fee,makeStock,addLot,initialize,settle,removeLot,correctLot,configure,quote,stats,migrate,validate,groupOf,inferKind,createPosition,handsToShares,holdingTotals,sortedMobileLots,mobileSummary,settleMobileAll,settlementImpact};if(typeof module!=='undefined')module.exports=root.LedgerCore;
 })(globalThis);

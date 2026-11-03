@@ -214,3 +214,92 @@ html[lang=en] .field:has(input[name=hands])>span{font-size:.875rem}html[lang=en]
 .operation-panel .stock-order{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem;margin:.125rem 0 0;container-type:inline-size}
 .operation-panel .stock-order button{width:100%;min-width:0;white-space:nowrap;min-height:1.875rem;font-size:.75rem;font-size:min(.75rem,6cqw);padding:.3125rem .125rem;line-height:1.25;letter-spacing:normal}
 @media(max-width:760px){.operation-panel .inline-quote{display:block}.operation-panel .quote-controls{width:100%}}
+/* Editable quote keeps the existing glass price badge. */
+.stock-name-line .quote-badge{flex:0 0 7rem;width:7rem;min-width:0;margin:0;display:block}
+.stock-name-line .quote-badge .stock-current-price{display:block;width:100%;max-width:none;min-height:2.25rem;height:auto;text-align:right;color:#b83f54;font-size:1.25rem;font-weight:750;padding:.1875rem .5rem;background:linear-gradient(145deg,#b9d4ff28,#599af90b);border-color:#ffffffba;cursor:text}
+.stock-name-line .quote-badge input:focus{outline:2px solid #7199e2;background:#ffffff50}
+[data-theme=dark] .stock-name-line .quote-badge input{color:#f09aad;background:#5897f81c;border-color:#9fc6ff30}
+.operation-panel .secondary-actions button{font-weight:550}
+.mobile-panel .age-cell{font-weight:400}.mobile-panel .age-cell span{font-weight:400}
+.mobile-panel tfoot{position:sticky;bottom:0;z-index:1;background:#dbe8f5;box-shadow:0 -1px 0 #a6bad140}
+.mobile-panel tfoot td{font-size:.75rem;font-weight:650;overflow:hidden;white-space:nowrap;height:2.75rem;padding:.375rem .25rem}
+.mobile-panel tfoot .summary-label{font-size:.6875rem}
+.mobile-panel tfoot .row-actions button{font-size:.6875rem;white-space:normal;padding:.25rem;line-height:1.15;min-height:2rem;color:#ba4055}
+[data-theme=dark] .mobile-panel tfoot{background:#26364c;box-shadow:0 -1px 0 #b4cae333}
+[data-theme=dark] .mobile-panel tfoot .row-actions button{color:#f09aad!important}
+/* Narrower stock details, with the released space given to the trading table. */
+@media(min-width:951px){.stock-grid,html[lang=en] .stock-grid{grid-template-columns:minmax(13.125rem,21%) minmax(0,1fr) 216px}.base-panel .position-metrics>div{flex-wrap:wrap;row-gap:.125rem}.base-panel .position-metrics dd{max-width:100%;margin-left:auto}.base-panel .stock-name-line h2{min-width:0;overflow-wrap:anywhere}}
+@media(min-width:1450px){.stock-grid,html[lang=en] .stock-grid{grid-template-columns:minmax(13.5rem,21%) minmax(0,1fr) 234px}}
+@media(max-width:1190px) and (min-width:951px){.stock-grid,html[lang=en] .stock-grid{grid-template-columns:minmax(12.9375rem,21%) minmax(0,1fr) 204px}}
+.stock-name-line .quote-badge{flex:0 0 auto;width:auto;max-width:100%}
+.stock-name-line .quote-badge input.stock-current-price{width:calc(var(--quote-ch,4)*1ch + 1.125rem);max-width:100%;min-width:0;text-align:left;font-variant-numeric:tabular-nums}
+.mobile-panel tfoot{background:linear-gradient(145deg,#b9d4ff28,#599af911);border:1px solid #ffffffb3;box-shadow:inset 0 1px 0 #ffffffb3,inset 0 -1px 0 #ffffff80;backdrop-filter:blur(20px) saturate(145%);-webkit-backdrop-filter:blur(20px) saturate(145%)}
+.mobile-panel tfoot td{border-top:1px solid #ffffffb3;border-bottom:1px solid #ffffff80}
+.mobile-panel tfoot td:first-child{border-left:1px solid #ffffffb3}.mobile-panel tfoot td:last-child{border-right:1px solid #ffffffb3}
+[data-theme=dark] .mobile-panel tfoot{background:linear-gradient(145deg,#86b5fc17,#8ba9d60b);border-color:#bfd8ff30;box-shadow:inset 0 1px 0 #ffffff28,inset 0 -1px 0 #ffffff18}
+[data-theme=dark] .mobile-panel tfoot td{border-color:#bfd8ff30}
+@media(min-width:761px){.operation-panel{align-items:center;padding-left:1.25rem;padding-right:1.25rem}.operation-panel>button.primary,.operation-panel .secondary-actions{width:100%;max-width:10rem;align-self:center}.operation-panel .secondary-actions button{width:100%;font-weight:550}.operation-panel .stock-order{width:100%;max-width:10rem;align-self:center}}
+/* Summary and quote form a balanced vertical layout inside the narrow stock panel. */
+@media(min-width:761px){
+ .base-panel{display:flex;flex-direction:column;justify-content:flex-start;padding:.75rem .875rem}
+ .base-panel .stock-name-line{flex-shrink:0;margin-bottom:.375rem}
+ .base-panel .stock-position{display:flex;flex-direction:column;justify-content:space-evenly;flex:1 0 auto;gap:.4375rem;margin:.25rem 0 .5rem}
+ .base-panel .stock-position>div{flex-wrap:wrap;align-items:baseline;gap:.1875rem .375rem;line-height:1.4}
+ .base-panel .stock-position>div+div{border-top:1px solid #ffffff38;padding-top:.375rem}
+ .base-panel .stock-position dt,html[lang=en] .base-panel .stock-position dt{font-size:.875rem;line-height:1.4;white-space:normal}
+ .base-panel .stock-position dd,html[lang=en] .base-panel .stock-position dd{font-size:1.0625rem;line-height:1.4;white-space:normal;overflow-wrap:anywhere}
+ .base-panel .stock-position>.position-pnl:first-child dd,html[lang=en] .base-panel .stock-position>.position-pnl:first-child dd{font-size:1.125rem}
+ .base-panel .stock-position>.market-value dd,html[lang=en] .base-panel .stock-position>.market-value dd{font-size:1.25rem}
+ .base-panel .mobile-capacity{flex-shrink:0;margin-top:auto;padding-top:.5rem;border-top:1px solid #ffffff60;font-size:.875rem;line-height:1.5;font-weight:600}
+ [data-theme=dark] .base-panel .stock-position>div+div,[data-theme=dark] .base-panel .mobile-capacity{border-color:#bfd8ff24}
+}
+/* Fixed siblings reserve their own space: body rows cannot pass underneath the footer. */
+.mobile-panel{display:flex;flex-direction:column;min-height:0}
+.mobile-panel>.table-wrap{flex:1 1 0;min-height:0;max-height:none}
+.mobile-panel>.table-footer{flex:0 0 auto;min-width:0;overflow:hidden;margin-top:.25rem;border:1px solid #ffffffb3;border-radius:.625rem;background:linear-gradient(145deg,#b9d4ff28,#599af911);box-shadow:inset 0 1px 0 #ffffff80}
+.mobile-panel .table-footer table{table-layout:fixed;width:100%;min-width:30rem}
+.mobile-panel .table-footer tfoot{position:static;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.mobile-panel .table-footer td,.mobile-panel .table-footer td:first-child,.mobile-panel .table-footer td:last-child{height:2.25rem;padding:.375rem .25rem;border:0;font-size:.75rem;font-weight:600;line-height:1.2}
+.mobile-panel .table-footer .numeric-line{font-size:calc(.75rem * var(--pnl-scale,1));line-height:1.2}
+.mobile-panel .table-footer .summary-label{font-size:.6875rem}
+.mobile-panel .table-footer .row-actions button{font-size:.6875rem;min-height:1.75rem;padding:.25rem;line-height:1.2}
+[data-theme=dark] .mobile-panel>.table-footer{background:linear-gradient(145deg,#86b5fc17,#8ba9d60b);border-color:#bfd8ff30;box-shadow:inset 0 1px 0 #ffffff28}
+[data-theme=dark] .mobile-panel .table-footer tfoot{background:transparent;box-shadow:none}
+/* Compact desktop summaries at browser zoom, without exposing a nested scrollbar. */
+@media(min-width:761px){
+ .base-panel{padding:.5rem .75rem;scrollbar-width:none;-ms-overflow-style:none}
+ .base-panel::-webkit-scrollbar{display:none;width:0;height:0}
+ .base-panel .stock-name-line{margin-bottom:.1875rem}
+ .base-panel .stock-position{gap:.25rem;margin:.125rem 0 .25rem}
+ .base-panel .stock-position>div{gap:.0625rem .375rem;line-height:1.25}
+ .base-panel .stock-position>div+div{padding-top:.1875rem}
+ .base-panel .stock-position dt,html[lang=en] .base-panel .stock-position dt,
+ .base-panel .stock-position dd,html[lang=en] .base-panel .stock-position dd{line-height:1.25}
+ .base-panel .mobile-capacity{padding-top:.25rem;line-height:1.3}
+ .mobile-panel>.table-footer{margin-top:.125rem;border-radius:.5rem}
+ .mobile-panel .table-footer td,.mobile-panel .table-footer td:first-child,.mobile-panel .table-footer td:last-child{height:auto;min-height:0;padding:.125rem .25rem;line-height:1.1}
+ .mobile-panel .table-footer .numeric-line{line-height:1.1}
+ .mobile-panel .table-footer td:last-child{padding:.125rem .0625rem}
+ .mobile-panel .table-footer .row-actions button{min-height:0;height:auto;font-size:.625rem;line-height:1.1;padding:.0625rem .125rem;white-space:nowrap}
+}
+/* The footer follows the measured header height, including wrapped English labels. */
+@media(min-width:761px){
+ .mobile-panel>.table-header,.mobile-panel>.table-footer{border:1px solid #ffffff90;border-radius:.625rem;background:linear-gradient(145deg,#b9d4ff28,#599af911);box-shadow:inset 0 1px 0 #ffffff80}
+ .mobile-panel>.table-footer{height:var(--table-footer-height,auto);margin-top:.25rem}
+ .mobile-panel .table-footer table,.mobile-panel .table-footer tfoot,.mobile-panel .table-footer tr{height:100%}
+ .mobile-panel .table-footer td,.mobile-panel .table-footer td:first-child,.mobile-panel .table-footer td:last-child{height:auto;padding:.4375rem .25rem;font-size:.75rem;font-weight:750;line-height:1.2;vertical-align:middle}
+ .mobile-panel .table-footer .numeric-line{font-size:calc(.75rem * var(--pnl-scale,1));line-height:1.2}
+ .mobile-panel .table-footer .summary-label{font-size:.75rem}
+ .mobile-panel .table-footer .row-actions button{min-height:1.5rem;height:auto;font-size:.6875rem;line-height:1.2;padding:.125rem .0625rem;white-space:nowrap}
+ [data-theme=dark] .mobile-panel>.table-header,[data-theme=dark] .mobile-panel>.table-footer{background:linear-gradient(145deg,#86b5fc17,#8ba9d60b);border-color:#bfd8ff24;box-shadow:inset 0 1px 0 #ffffff16}
+ .mobile-panel tbody td{height:2rem;padding-top:.1875rem;padding-bottom:.1875rem;line-height:1.2}
+ .mobile-panel tbody .row-actions button{min-height:1.5rem;font-size:.8125rem;line-height:1.2;padding:.125rem .3125rem}
+}
+@media(min-width:761px){
+ .mobile-panel .table-footer td.row-actions{padding:.25rem .0625rem}
+ .mobile-panel .table-footer .row-actions button{min-height:1.25rem}
+}
+.settle-preview .cost-impact{display:flex;flex-direction:column;gap:.25rem;border-top:1px solid var(--line);padding-top:.625rem;margin-top:.125rem}
+.settle-preview .cost-impact>span,.settle-preview .cost-impact>span:last-child{font-size:.875rem;line-height:1.4;color:var(--muted)}
+.settle-preview .cost-impact>strong{font-size:1.0625rem;line-height:1.4;font-weight:650;overflow-wrap:anywhere}
+.settle-preview .cost-impact>span.cost-impact-change{font-weight:600;color:inherit}
