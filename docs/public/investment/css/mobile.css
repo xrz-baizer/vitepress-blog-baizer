@@ -86,7 +86,7 @@
   .modal-head button{flex-shrink:0;width:2.75rem;height:2.75rem;min-height:2.75rem}
   .form-grid,.form-grid.three{grid-template-columns:minmax(0,1fr);gap:0}
   .field{min-width:0;margin-bottom:.875rem;gap:.375rem}
-  .field>span,html[lang=en] .field:has(input[name=hands])>span,html[lang=en] .field:has(input[name=base-hands])>span{white-space:normal;font-size:.9375rem;line-height:1.35}
+  .field>label,html[lang=en] .field:has(input[name=hands])>label,html[lang=en] .field:has(input[name=base-hands])>label{white-space:normal;font-size:.9375rem;line-height:1.35}
   .field input{min-width:0;min-height:2.875rem;font-size:1.0625rem}
   .calculation,.settle-preview{padding:.75rem;gap:.5rem;overflow-wrap:anywhere}
   .settle-preview b{font-size:1.5rem;margin-left:.5rem}
@@ -126,4 +126,32 @@
  .mobile-panel .table-footer .numeric-line{font-size:calc(.875rem * var(--pnl-scale,1))}
  .mobile-panel .table-footer .row-actions button{font-size:.875rem;min-height:2.75rem}
  [data-theme=dark] .mobile-panel .table-footer tr{background:none;box-shadow:none;border:0}
+}
+
+@media(max-width:760px),(max-width:950px) and (pointer:coarse){
+ .operation-panel>.history-button{grid-column:1/-1;grid-row:3;max-width:none;width:100%;min-height:2.75rem;margin-top:0}
+ .operation-panel .stock-order{grid-row:2}
+ .mobile-panel>.table-wrap{border-left:0;border-right:0}
+ .mobile-panel .table-footer td:first-child,.mobile-panel .table-footer td:last-child{padding:0}
+ .mobile-panel .lot-actions{display:flex;width:100%;gap:.375rem}
+ .mobile-panel .lot-actions button,html[lang=en] .mobile-panel .lot-actions button{flex:1;width:auto;min-width:0;min-height:2.75rem;padding:.375rem .25rem;font-size:.875rem}
+ dialog.wide:has(.history-table){width:calc(100% - 1rem);max-width:40rem;height:min(40rem,calc(100dvh - 2rem))}
+ .history-summary{gap:.875rem 1rem}
+ .history-summary>div{flex:1 1 calc(50% - 1rem);min-width:0}
+ .history-summary dd{font-size:1.125rem}
+ .history-table .history-undo{min-height:0;height:min(2.75rem,100%)}
+ .history-pagination{flex-wrap:nowrap}
+ .history-pagination button{min-height:2.75rem}
+}
+
+@media(max-width:760px),(max-width:950px) and (pointer:coarse){
+ .number-control{--step-button-size:max(2.75rem,44px)}
+ .field .number-control input{min-height:calc(var(--step-button-size) + .5rem)}
+ .number-step-buttons button{min-height:0}
+}
+
+@media(max-width:760px),(max-width:950px) and (pointer:coarse){
+ .compact-date-control>input[data-date-text]{font-size:max(.875rem,16px);min-height:44px;padding-right:44px}
+ .compact-date-picker{width:44px;min-height:0}
+ .buy-calculation{gap:.5rem 1rem}
 }
